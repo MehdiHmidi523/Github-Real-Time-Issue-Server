@@ -1,0 +1,30 @@
+{
+  "name": "mh223vk-examination-3",
+  "version": "1.0.0",
+  "description": "github issue presentation",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1dv523/mh223vk-examination-3.git"
+  },
+  "author": "Mehdi Hmidi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1dv523/mh223vk-examination-3/issues"
+  },
+  "homepage": "https://github.com/1dv523/mh223vk-examination-3#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "body-parser": "^1.18.2",
+    "dotenv": "^4.0.0",
+    "express-session": "^1.15.6",
+    "passport": "^0.4.0",
+    "passport-github": "^1.1.0",
+    "pug": "^2.0.0-rc.4",
+    "request": "^2.83.0",
+    "socket.io": "^2.0.4"
+  }
+}
