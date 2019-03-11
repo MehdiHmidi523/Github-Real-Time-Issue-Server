@@ -38,12 +38,20 @@ app.use('/', require('./routes/githubConnect.js'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Start listening to the port ----------------------
-let server = app.listen(port, () =>
-    console.log('Express is up on cscloud401.lnu.se:3000/')
-);
+const http = require('http')
+const socket = require('socket.io')
+// config for server in https
+const server = http.createServer(app).listen(process.env.PORT, (err) => {
+  if (err) console.log(err)
+  else console.log('Listening on port', process.env.PORT)
+})
 
 // Creating web socket on server side ------------------------
-let io = require('socket.io')(server);
+// establish socket connection
+const io = socket(server) 
+io.on('connection', () => {
+  console.log('Connected to socket!')
+})
 
 //Listening to webhooks
 app.post('/hookie', githubMiddleware, function (req, res) {
