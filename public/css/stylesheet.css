@@ -1,0 +1,19 @@
+#main_div {
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+}
+
+.issue {
+    display:flex;
+    flex-direction:column;
+}
+
+.notification {
+    display:flex;
+    flex-direction:column;
+}
+
+li {
+    margin: 0 0 10px 0;
+}

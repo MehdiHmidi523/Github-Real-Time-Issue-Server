@@ -1,50 +1,83 @@
-const express = require('express')
-const passport = require('passport')
-const session = require('express-session')
-const passportSetup = require('./config/passport-setup')
-const path = require('path')
-const bodyParser = require('body-parser')
-const fs =  require('fs')
-const env = require('dotenv')
-env.config()
-const app = express()
 
-// config for ssl certificate self signed
-const httpsOptions = {
-  key: fs.readFileSync(path.join(process.env.MY_CERT_KEY)),
-  cert: fs.readFileSync(path.join(process.env.MY_CERT))
-}
+"use strict";
 
-// config for server in https
-const https = require('https')
-const socket = require('socket.io')
-const server = https.createServer(httpsOptions, app).listen(process.env.MY_PORT, (err) => {
-  if (err) console.log(err)
-  else console.log('Listening on port: ==> ', process.env.MY_PORT)
-})
+//For the environment variable
+require('dotenv').config();
 
-// establish socket connection
-const io = socket(server) 
-io.on('connection', () => { console.log('Connected to socket!') })
-app.set('socketio', io)
+const express = require('express');
+const app = express();
 
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'pug')
+//Tools for express
+const bodyParser = require('body-parser');
+const path = require('path');
+const exphbs = require('express-handlebars');
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-app.use(session({
-  secret: process.env.MY_SECRET,
-  resave: false,
-  saveUninitialized: true
-}))
+//Github webhook middleware
+const githubMiddleware = require('github-webhook-middleware')({
+    secret: process.env.HOOK_KEY        //Secret to check if the received hook is safe
+});
 
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(express.static(path.join(__dirname, 'public')))
+const port = process.env.PORT || 8000;
 
-app.use('/auth', require('./routes/auth.js'))
-app.use('/webhook', require('./routes/webhook.js'))
+//View engine ------------------------
+app.engine('.hbs', exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs'
+}));
+app.set('view engine', '.hbs');
 
-app.get('/', function (req, res) { res.render('index', { title: 'Login page' }) })
-app.get('*', function (req, res) { res.status(200).render('error', { message: '404 resource not found' }) })
+//Add supporting for handling HTML form data ------------------------
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+//Routing ----------------------------------------------------
+app.use('/', require('./routes/githubConnect.js'));
+
+
+//Static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+//Start listening to the port ----------------------
+let server = app.listen(port, () =>
+    console.log('Express is up on cscloud401.lnu.se:3000/')
+);
+
+// Creating web socket on server side ------------------------
+let io = require('socket.io')(server);
+
+//Listening to webhooks
+app.post('/hookie', githubMiddleware, function (req, res) {
+    res.status(200);
+    res.send();
+
+    // action, title, user for the notification
+    let notification = {
+        action: req.body.action,
+        user: req.body.issue.user.login,
+        title: req.body.issue.title,
+    };
+
+    //triggering off the client to update on receiving from Github
+    //Check whether the changed is a comment or an issue
+    let xGithubEvent = req.headers['x-github-event'];
+
+    //Object to hold only the required info from the issue
+    let context = {
+        id: req.body.issue.id,
+        title: req.body.issue.title,
+        issueBody: req.body.issue.body,
+        comments: req.body.issue.comments,
+        issueUrl: req.body.issue.url,
+        created_at: req.body.issue.created_at,
+        updated_at: req.body.issue.updated_at
+    };
+
+    if (xGithubEvent === 'issues') {
+        io.emit('issue webhook', notification);         //a message with for the notification
+        io.emit('issue body', context);         //a message with for the payload
+    } else if (xGithubEvent === 'issue_comment') {
+        io.emit('comment webhook', notification);
+        io.emit('issue body', context);         //a message with for the payload
+
+    }
+});

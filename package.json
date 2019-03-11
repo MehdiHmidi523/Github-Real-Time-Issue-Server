@@ -1,15 +1,23 @@
 {
-  "name": "mh223vk-examination-3",
+  "name": "exam3",
   "version": "1.0.0",
-  "description": "github issue presentation",
+  "description": "Ex3",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/1dv523/mh223vk-examination-3.git"
   },
+  "keywords": [
+    "Javascript",
+    "node",
+    "express",
+    "hooks",
+    "realtimeApp"
+  ],
   "author": "Mehdi Hmidi",
   "license": "ISC",
   "bugs": {
@@ -17,14 +25,16 @@
   },
   "homepage": "https://github.com/1dv523/mh223vk-examination-3#readme",
   "dependencies": {
-    "express": "^4.16.4",
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.16.0",
+    "debug": "^2.6.0",
     "dotenv": "^4.0.0",
-    "express-session": "^1.15.6",
-    "passport": "^0.4.0",
-    "passport-github": "^1.1.0",
-    "pug": "^2.0.0-rc.4",
-    "request": "^2.83.0",
-    "socket.io": "^2.0.4"
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "github-webhook-middleware": "0.0.2",
+    "materialize-css": "^0.98.0",
+    "path": "^0.12.7",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1",
+    "socket.io": "^1.7.2"
   }
 }
