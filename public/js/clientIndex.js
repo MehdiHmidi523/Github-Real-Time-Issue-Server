@@ -1,11 +1,10 @@
-/**
- * Created by hatem on 2016-12-30.
- * Client-side; has the socket to communicate with the server side and show info on the browser
- */
+
 "use strict";
 
-let socket = io.connect();
-
+let socket = io.connect('https://cscloud401.lnu.se/');
+socket.on('connect', () => {
+    console.log('connected!')
+})
 //Notification for issue
 socket.on('issue webhook', function (data) {
     createNotification(data, 'issue');
