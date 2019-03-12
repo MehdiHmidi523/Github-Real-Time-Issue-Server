@@ -1,10 +1,7 @@
 
 "use strict";
 
-let socket = io.connect('https://cscloud401.lnu.se/');
-socket.on('connect', () => {
-    console.log('connected!')
-})
+let socket = io.connect();
 //Notification for issue
 socket.on('issue webhook', function (data) {
     createNotification(data, 'issue');
