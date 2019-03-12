@@ -35,23 +35,15 @@ app.use('/', require('./routes/githubConnect.js'));
 
 
 //Static files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public/')));
 
 //Start listening to the port ----------------------
-const http = require('http')
-const socket = require('socket.io')
-// config for server in https
-const server = http.createServer(app).listen(process.env.PORT, (err) => {
-  if (err) console.log(err)
-  else console.log('Listening on port', process.env.PORT)
-})
+let server = app.listen(port, () =>
+    console.log('Express is up on cscloud401.lnu.se:3000/')
+);
 
 // Creating web socket on server side ------------------------
-// establish socket connection
-const io = socket(server) 
-io.on('connection', () => {
-  console.log('Connected to socket!')
-})
+let io = require('socket.io')(server);
 
 //Listening to webhooks
 app.post('/hookie', githubMiddleware, function (req, res) {
@@ -65,11 +57,8 @@ app.post('/hookie', githubMiddleware, function (req, res) {
         title: req.body.issue.title,
     };
 
-    //triggering off the client to update on receiving from Github
-    //Check whether the changed is a comment or an issue
+    //emit to client to update on receiving from Github
     let xGithubEvent = req.headers['x-github-event'];
-
-    //Object to hold only the required info from the issue
     let context = {
         id: req.body.issue.id,
         title: req.body.issue.title,
@@ -79,13 +68,11 @@ app.post('/hookie', githubMiddleware, function (req, res) {
         created_at: req.body.issue.created_at,
         updated_at: req.body.issue.updated_at
     };
-
     if (xGithubEvent === 'issues') {
-        io.emit('issue webhook', notification);         //a message with for the notification
-        io.emit('issue body', context);         //a message with for the payload
+        io.emit('issue webhook', notification);       
+        io.emit('issue body', context);        
     } else if (xGithubEvent === 'issue_comment') {
         io.emit('comment webhook', notification);
-        io.emit('issue body', context);         //a message with for the payload
-
+        io.emit('issue body', context);      
     }
 });

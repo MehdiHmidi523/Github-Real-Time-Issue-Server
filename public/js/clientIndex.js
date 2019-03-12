@@ -1,6 +1,5 @@
 
 "use strict";
-
 let socket = io.connect();
 //Notification for issue
 socket.on('issue webhook', function (data) {
@@ -17,16 +16,10 @@ socket.on('comment webhook', function (data) {
     createNotification(data, 'comment');
 });
 
-/**
- * Shows the notification
- * @param notification
- * @param typeOfAction
- */
 function createNotification(notification, typeOfAction) {
     let ul = document.getElementById('notification_ul');
     let  li = document.createElement('li');
-    li.setAttribute('class', 'card-panel');
-
+    
     li.innerHTML = 'Action: ' + notification.action + ' ' + typeOfAction + '<br/>'
         + 'Title: ' + notification.title + '<br/>'
         + 'User: ' + notification.user + '<br/>';
@@ -34,14 +27,9 @@ function createNotification(notification, typeOfAction) {
     ul.appendChild(li);
 }
 
-/**
- * Shows the updated issues
- * @param issue
- */
 function renderIssues(issue) {
     let ul = document.getElementById('issues_ul');
     let li = document.getElementById(issue.id);
-
     li.innerHTML = 'Title: ' + issue.title  + '<br/>'
         + 'Body: ' + issue.issueBody  + '<br/>'
         + 'Comments: ' + issue.comments + '<br/>'

@@ -1,27 +1,31 @@
-<!-- Issues part -->
-<div class="card-panel issue">
-    <h3>Issues</h3>
+<div class="block issue">
+
+    <div class="blockSignature">
+        <h3>Issues</h3>
+    </div>
+
     {{#if issues }}
-        <ul id="issues_ul" class="#e1f5fe light-blue lighten-5">
-            {{#each issues}}
-                <!--For each snippet in the array -->
-            <li class="card-panel" id={{id}}> Title:     {{title}}       <br>
+        <ul id="issues_ul">
+           {{#each issues}}
+            <li id={{id}}>
+                Title:     {{title}}       <br>
                 Body:       {{issueBody}}   <br>
                 Comments:   {{comments}}    <br>
                 URL:        {{issueUrl}}    <br>
                 Created at: {{created_at}}  <br>
                 Updated at: {{updated_at}}  <br>
-            {{/each}}
+            </li>
+           {{/each}}
         </ul>
     {{else}}
-        <!--If the issues array is empty -->
-        There are no issues to show.
+        No issues brosan.
     {{/if}}
 </div>
+<div>
+    <div class="blockSignature notification">
+        <h3>Notifications</h3>
+    </div>
+    <ul id="notification_ul">
 
-<!-- Notifications part -->
-<div class="card-panel notification">
-    <h3>Notifications</h3>
-    <ul id="notification_ul" class="#ffebee red lighten-5">
     </ul>
 </div>
