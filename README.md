@@ -6,9 +6,9 @@ Use the provided ubuntu server [mh223vk](https://cscloud401.lnu.se/).
 ## Describe what you have done to make your application secure, both in code and when configuring your application server
 
 can have nginx proxy requests to HTTP servers, and then itself respond to clients over HTTPS. When doing this, you will want to be sure that the nginx<->proxy connect is unlikely to be sniffed by whoever is your expected attacker. Safe-enough approaches might include: 
-     - proxying to the same host (as you do) :+1:
-     - proxying to other hosts behind your firewall
-          - Proxying to another host on the public Internet is unlikely to be safe-enough
+ - proxying to the same host (as you do) :+1:
+ - proxying to other hosts behind your firewall
+ => Proxying to another host on the public Internet is unlikely to be safe-enough
 Certbot is an automated python script to set up letsencrypt certificates on the website. These SSL certificates are recognized by every major browsers, which means we will get the green lock on our website once installed.
 
 ## Describe the following parts, how you are using them and what their purpose
