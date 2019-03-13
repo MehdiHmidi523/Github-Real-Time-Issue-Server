@@ -11,7 +11,10 @@ can have nginx proxy requests to HTTP servers, and then itself respond to client
 
 Proxying to another host on the public Internet is unlikely to be safe-enough
 ## Describe the following parts, how you are using them and what their purpose
-    Reversed proxy
+    Reversed proxy 
+```` Java
+add the .well-known location described in RFC-5785 in our Nginx configuration which sets up a webroot on the Nginx server instead of proxying it to the backend server. This folder will allow us to validate the SSL certificate using the Automatic Certificate Management Environment with Certbot.
+````
     Process manager
     TLS certificates
     Environment variables
