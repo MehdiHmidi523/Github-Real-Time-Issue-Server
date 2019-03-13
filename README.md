@@ -1,8 +1,8 @@
 # mh223vk-examination-3
 Real time github todo list issue server.
 
- What is the URL to your application?
-
+## What is the URL to your application?
+Use the provided ubuntu server [mh223vk](https://cscloud401.lnu.se/).
 ## Describe what you have done to make your application secure, both in code and when configuring your application server
 
 ## Describe the following parts, how you are using them and what their purpose
