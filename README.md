@@ -12,6 +12,13 @@ I have nginx proxy run requests to HTTP servers, and then itself respond to clie
  => Proxying to another host on the public Internet is unlikely to be safe-enough
 Certbot is an automated python script to set up letsencrypt certificates on the website. These SSL certificates are recognized by every major browsers, which means we will get the green lock on our website once installed. As I did when I run my tests on the ssl certificates. 
 
+The packages that I use could contain critical security vulnerabilities that could affect my application. The security of the app is as strong as the “weakest link” in the dependencies.
+Since npm@6, npm automatically reviews every install request. Also we can use ‘npm audit’ to analyze the dependency tree.
+   
+   === npm audit security report ===
+       found 0 vulnerabilities
+       in 403 scanned packages
+
 ## Describe the following parts, how you are using them and what their purpose
     Reversed proxy 
 ```` Java
