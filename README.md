@@ -4,15 +4,18 @@ Real time github todo list issue server.
 ## What is the URL to your application?
 Use the provided ubuntu server [mh223vk](https://cscloud401.lnu.se/).
 ## Describe what you have done to make your application secure, both in code and when configuring your application server
+I do not ship or deploy with any default credentials, particularly for admin users.
+
+Check my SSL certificates
 https://www.ssllabs.com/ssltest/analyze.html?d=cscloud401.lnu.se
 
-I have nginx proxy run requests to HTTP servers, and then itself respond to clients over HTTPS. When doing this, I was sure that the nginx<->proxy connection is unlikely to be sniffed by whoever is an expected attacker. Safe-enough approaches might include: 
+I have the nginx proxy run requests to HTTP app server, and then itself respond to clients over HTTPS. When doing this, I was sure that the nginx<->proxy connection is unlikely to be sniffed by whomever is an expected attacker. Safe-enough approaches might include: 
  - proxying to the same host (as you do) :+1:
  - proxying to other hosts behind your firewall
 
  => Proxying to another host on the public Internet is unlikely to be safe-enough
 
-Certbot is an automated python script to set up letsencrypt certificates on the website. These SSL certificates are recognized by every major browsers, which means we will get the green lock on our website once installed. As I did when I run my tests on the ssl certificates. 
+In addition I used Certbot, which is an automated python script to set up #letsencrypt# certificates on the website. These SSL certificates are recognized by every major browsers, which means we will get the green lock on our website once installed. As I did when I run my tests on the ssl certificates. 
 
 The packages that I use could contain critical security vulnerabilities that could affect my application. The security of the app is as strong as the “weakest link” in the dependencies.
 
