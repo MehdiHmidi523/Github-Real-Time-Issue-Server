@@ -3,6 +3,9 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const helmet = require('helmet');
+app.use(helmet());
+app.disable('x-powered-by');
 //Tools
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -16,10 +19,7 @@ app.use(express.static(path.join(__dirname, '/public/')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //Github webhook middleware
-const githubMiddleware = require('github-webhook-middleware')({
-    secret: process.env.HOOK_KEY        //Secret to check if the received hook is safe
-});
-
+const githubMiddleware = require('github-webhook-middleware')({ secret: process.env.HOOK_KEY });
 /*  PASSPORT SETUP  */
 const passport = require('passport');
 app.use(passport.initialize());
@@ -35,8 +35,9 @@ passport.use(new GitHubStrategy({
     clientSecret: GITHUB_CLIENT_SECRET,
     callbackURL: "http://cscloud401.lnu.se/auth/github/callback"
   },
-  function(accessToken, refreshToken, profile, cb) { return cb(null, profile); }
-));
+  function(accessToken, refreshToken, profile, cb) {
+        return cb(null, profile);
+}));
 app.get('/auth/github',  passport.authenticate('github'));
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/error' }),
   function(req, res) { res.redirect('/success'); });
@@ -47,9 +48,10 @@ app.use('/success', require('./routes/githubConnect.js'));
 app.get('/', (req, res) => res.sendFile('auth.html', { root: path.join(__dirname, '/public')}));
 app.get('/error', (req, res) => res.send("error logging in"));
 //Start Server
-let server = app.listen(port, () =>
-    console.log('Express is up on cscloud401.lnu.se:3000/')
-);
+const server = app.listen(port, (err) => {
+    if (err) console.log(err)
+    else console.log('Express is up on cscloud401.lnu.se:3000/');
+});
 // Creating web socket on server side ------------------------
 let io = require('socket.io')(server);
 //Listening to webhooks
