@@ -29,8 +29,8 @@ Since npm@6, npm automatically reviews every install request. Also we can use â€
     Reversed proxy 
 - We add the .well-known location described in RFC-5785 in our Nginx configuration  which sets up a webroot on the Nginx server instead of proxying it to the backend server. This folder will allow us to validate the SSL certificate 
 using the Automatic Certificate Management Environment with Certbot.
-
-    Process manager
+ 
+      Process manager
 - we can increase the performance of a Node app by many times by launching a cluster of processes.The Cluster mode is a special mode when starting a Node.js application, it starts multiple processes and load-balance HTTP/TCP/UDP queries between them
 - Hot Reload allows to update an application without any downtime
     
