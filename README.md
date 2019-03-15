@@ -27,18 +27,21 @@ Since npm@6, npm automatically reviews every install request. Also we can use �
 
 ## Describe the following parts, how you are using them and what their purpose
     Reversed proxy 
-```` Java
-add the .well-known location described in RFC-5785 in our Nginx configuration 
-which sets up a webroot on the Nginx server instead of proxying it to the backend server.
-This folder will allow us to validate the SSL certificate 
++We add the .well-known location described in RFC-5785 in our Nginx configuration  which sets up a webroot on the Nginx server instead of proxying it to the backend server. This folder will allow us to validate the SSL certificate 
 using the Automatic Certificate Management Environment with Certbot.
-````
+
     Process manager
++we can increase the performance of a Node app by many times by launching a cluster of processes.The Cluster mode is a special mode when starting a Node.js application, it starts multiple processes and load-balance HTTP/TCP/UDP queries between them
++Hot Reload allows to update an application without any downtime
     TLS certificates
     Environment variables
 ## What differs in your application when running it in development from running it in production?
+Setting NODE_ENV to “production” makes Express:
++Cache view templates.
++Cache CSS files generated from CSS extensions.
++Generate less verbose error messages
 
-
+avoid using synchronous functions or methods that might take milliseconds or microseconds. For a high traffic website it will compound and may lead to high latency or response time of the API 
 
 ## Which extra modules did you use in the assignment? Motivate the use of them and how you have make sure that they are secure enough for production
 
