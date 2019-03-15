@@ -27,19 +27,23 @@ Since npm@6, npm automatically reviews every install request. Also we can use �
 
 ## Describe the following parts, how you are using them and what their purpose
     Reversed proxy 
-+We add the .well-known location described in RFC-5785 in our Nginx configuration  which sets up a webroot on the Nginx server instead of proxying it to the backend server. This folder will allow us to validate the SSL certificate 
+- We add the .well-known location described in RFC-5785 in our Nginx configuration  which sets up a webroot on the Nginx server instead of proxying it to the backend server. This folder will allow us to validate the SSL certificate 
 using the Automatic Certificate Management Environment with Certbot.
 
     Process manager
-+we can increase the performance of a Node app by many times by launching a cluster of processes.The Cluster mode is a special mode when starting a Node.js application, it starts multiple processes and load-balance HTTP/TCP/UDP queries between them
-+Hot Reload allows to update an application without any downtime
-    TLS certificates
-    Environment variables
+- we can increase the performance of a Node app by many times by launching a cluster of processes.The Cluster mode is a special mode when starting a Node.js application, it starts multiple processes and load-balance HTTP/TCP/UDP queries between them
+- Hot Reload allows to update an application without any downtime
+    
+      TLS certificates
+- When a browser attempts to access a website that is secured by SSL, the browser and the web server establish an SSL connection using a process called an “SSL Handshake”.
+- Essentially, three keys are used to set up the SSL connection: the public, private, and session keys. Anything encrypted with the public key can only be decrypted with the private key, and vice versa.Because encrypting and decrypting with private and public key takes a lot of processing power, they are only used during the SSL Handshake to create a symmetric session key. After the secure connection is made, the session key is used to encrypt all transmitted data.
+- The Let’s Encrypt client, running on your host, creates a temporary file (a token) with the required information in it. The Let’s Encrypt validation server then makes an HTTP request to retrieve the file and validates the token, which verifies that the DNS record for your domain resolves to the server running the Let’s Encrypt client.
+      Environment variables
 ## What differs in your application when running it in development from running it in production?
 Setting NODE_ENV to “production” makes Express:
-+Cache view templates.
-+Cache CSS files generated from CSS extensions.
-+Generate less verbose error messages
+- Cache view templates.
+- Cache CSS files generated from CSS extensions.
+- Generate less verbose error messages
 
 avoid using synchronous functions or methods that might take milliseconds or microseconds. For a high traffic website it will compound and may lead to high latency or response time of the API 
 
