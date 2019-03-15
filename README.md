@@ -38,7 +38,13 @@ using the Automatic Certificate Management Environment with Certbot.
 - When a browser attempts to access a website that is secured by SSL, the browser and the web server establish an SSL connection using a process called an “SSL Handshake”.
 - Essentially, three keys are used to set up the SSL connection: the public, private, and session keys. Anything encrypted with the public key can only be decrypted with the private key, and vice versa.Because encrypting and decrypting with private and public key takes a lot of processing power, they are only used during the SSL Handshake to create a symmetric session key. After the secure connection is made, the session key is used to encrypt all transmitted data.
 - The Let’s Encrypt client, running on your host, creates a temporary file (a token) with the required information in it. The Let’s Encrypt validation server then makes an HTTP request to retrieve the file and validates the token, which verifies that the DNS record for your domain resolves to the server running the Let’s Encrypt client.
+      
       Environment variables
+- can run your app anywhere by modifying the environment variables without changing your code and without rebuilding it
+- there is no good place to see the list of variables
+- it’s far too easy to make a typing mistake from the command line
+- it’s not ideal to remember all of the variables and their values
+- even with npm scripts, you still have to keep them current
 ## What differs in your application when running it in development from running it in production?
 Setting NODE_ENV to “production” makes Express:
 - Cache view templates.
@@ -49,5 +55,10 @@ avoid using synchronous functions or methods that might take milliseconds or mic
 
 ## Which extra modules did you use in the assignment? Motivate the use of them and how you have make sure that they are secure enough for production
 
+I made the Auditing package dependencies for security vulnerabilities using #npm audit# that checks direct dependencies, devDependencies, bundledDependencies, and optionalDependencies and then it asks for a report of known vulnerabilities
+
 ## Have you implemented any extra features (see below) that could motivate a higher grade of this assignment? If so, describe them.
+
+I used let's encrypt and OAuth with github accessToken handler
+
 
